@@ -1,0 +1,320 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f8f9fa; /* Light grey background similar to Google Store */
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+h1, h2, h3 {
+    color: #202124; /* Dark grey for headings */
+    margin-bottom: 0.5em;
+}
+
+h1 {
+    font-size: 2.8em;
+    font-weight: 700;
+    margin-bottom: 0.2em;
+}
+
+h2 {
+    font-size: 2.2em;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0; /* Subtle separator */
+    display: inline-block; /* To make border only as wide as text */
+}
+/* Center align h2 properly */
+section h2, footer h2 {
+    display: block; /* Override inline-block for proper centering within section */
+}
+
+
+h3 {
+    font-size: 1.6em;
+    font-weight: 500;
+    color: #3c4043;
+    margin-bottom: 20px;
+}
+
+p {
+    margin-bottom: 1em;
+    color: #5f6368; /* Medium grey for text */
+}
+
+a {
+    color: #1a73e8; /* Google's blue for links */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Hero Section */
+#hero {
+    background-color: #fff; /* White background for hero */
+    padding: 80px 0;
+    text-align: center;
+    border-bottom: 1px solid #dadce0;
+}
+
+#hero .subtitle {
+    font-size: 1.2em;
+    color: #5f6368;
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: #1a73e8;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #1765cc;
+    text-decoration: none;
+}
+
+/* Portfolio Section - Carousels */
+.portfolio-section, .skills-section, .experience-section {
+    padding: 60px 0;
+    background-color: #fff;
+    margin-bottom: 20px; /* Space between white sections */
+    border-bottom: 1px solid #dadce0;
+}
+.portfolio-section:last-of-type,
+.skills-section:last-of-type,
+.experience-section:last-of-type {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 900px; /* Max width for carousel */
+    margin: 0 auto 50px auto; /* Centered with bottom margin */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.carousel-slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    max-height: 500px; /* Max height for images */
+    object-fit: contain; /* Show full image, letterbox if needed */
+    display: block;
+    border-radius: 8px 8px 0 0; /* Rounded top corners if image is at the top */
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    font-size: 20px;
+    line-height: 1;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-button.prev {
+    left: 15px;
+}
+
+.carousel-button.next {
+    right: 15px;
+}
+
+.carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.carousel-description {
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 0.95em;
+    color: #5f6368;
+    background-color: #f8f9fa; /* Slight contrast for description */
+    border-top: 1px solid #e0e0e0;
+    margin-bottom: 0; /* Remove default p margin */
+    border-radius: 0 0 8px 8px;
+}
+
+
+/* Skills Section */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+
+.skill-item {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.skill-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.skill-item img {
+    width: 60px; /* Adjust as needed */
+    height: 60px;
+    margin-bottom: 10px;
+    object-fit: contain;
+}
+
+.skill-item p {
+    margin-bottom: 0;
+    font-weight: 500;
+    color: #3c4043;
+}
+
+/* Experience Section */
+.experience-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column by default */
+    gap: 30px;
+}
+
+.experience-item {
+    background-color: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+}
+
+.experience-item h3 {
+    font-size: 1.4em;
+    margin-bottom: 5px;
+}
+
+.experience-item .company-date {
+    font-size: 0.9em;
+    color: #1a73e8; /* Blue for company/date */
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+/* Footer / Contact Section */
+#contact {
+    background-color: #f1f3f4; /* Slightly different grey for footer */
+    color: #3c4043;
+    padding: 50px 0;
+    text-align: center;
+    border-top: 1px solid #dadce0;
+}
+
+#contact h2 {
+    margin-bottom: 20px;
+    border-bottom: none; /* No border for footer h2 */
+}
+
+.contact-info p {
+    margin-bottom: 8px;
+    font-size: 1.1em;
+}
+
+.contact-info a {
+    color: #1a73e8;
+}
+.contact-info a:hover {
+    color: #1765cc;
+}
+
+.copyright {
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #5f6368;
+}
+
+/* Responsive Adjustments */
+@media (min-width: 768px) {
+    h1 {
+        font-size: 3.5em;
+    }
+    h2 {
+        font-size: 2.5em;
+    }
+    .experience-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Multi-column for larger screens */
+    }
+}
+
+@media (max-width: 767px) {
+    h1 {
+        font-size: 2.2em;
+    }
+    h2 {
+        font-size: 1.8em;
+        margin-bottom: 30px;
+    }
+    h3 {
+        font-size: 1.4em;
+    }
+    #hero {
+        padding: 50px 0;
+    }
+    .cta-button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 20px;
+    }
+    .skill-item img {
+        width: 50px;
+        height: 50px;
+    }
+     .carousel-button {
+        padding: 8px 12px;
+        font-size: 16px;
+        width: 35px;
+        height: 35px;
+    }
+    .carousel-button.prev { left: 10px; }
+    .carousel-button.next { right: 10px; }
+}
