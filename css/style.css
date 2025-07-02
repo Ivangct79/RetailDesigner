@@ -40,7 +40,6 @@ section h2, footer h2 {
     display: block; /* Override inline-block for proper centering within section */
 }
 
-
 h3 {
     font-size: 1.6em;
     font-weight: 500;
@@ -62,17 +61,50 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Hero Section */
+/* --- MODIFICADO: Estilos del Header (Hero) --- */
 #hero {
-    background-color: #fff; /* White background for hero */
+    position: relative; /* Necesario para el overlay */
+    background-image: url('https://images.unsplash.com/photo-1556742111-a301076d9d18?q=80&w=2070&auto=format&fit=crop'); /* URL de tu imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    color: #fff; /* Texto blanco para que contraste con el fondo */
     padding: 80px 0;
     text-align: center;
-    border-bottom: 1px solid #dadce0;
 }
+
+/* Overlay oscuro para mejorar la legibilidad del texto */
+#hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Capa oscura semitransparente */
+    z-index: 1;
+}
+
+/* Aseguramos que el contenido esté por encima del overlay */
+#hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Reducción del tamaño de los títulos del hero */
+#hero h1 {
+    font-size: 2.5rem; /* Tamaño ligeramente más pequeño */
+}
+
+#hero h2 {
+    font-size: 1.4rem; /* Tamaño ligeramente más pequeño */
+    font-weight: 400;
+    border-bottom: none; /* Quitamos el borde en el hero */
+}
+
 
 #hero .subtitle {
     font-size: 1.2em;
-    color: #5f6368;
+    color: #f1f3f4; /* Color de texto más claro para el subtítulo */
     max-width: 700px;
     margin: 0 auto 30px auto;
 }
@@ -135,12 +167,39 @@ a:hover {
     max-height: 500px; /* Max height for images */
     object-fit: contain; /* Show full image, letterbox if needed */
     display: block;
-    border-radius: 8px 8px 0 0; /* Rounded top corners if image is at the top */
+    /* Quitamos el border-radius de aquí para que no interfiera si los puntos van debajo */
 }
+
+/* --- NUEVO: Estilos para los Puntos del Carrusel --- */
+.carousel-dots {
+    text-align: center;
+    padding: 15px 0 10px; /* Espacio para los puntos */
+}
+
+.dot {
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: #dadce0; /* Color de punto inactivo */
+    border-radius: 50%; /* Círculo por defecto */
+    display: inline-block;
+    transition: background-color 0.6s ease, width 0.4s ease; /* Animación suave */
+    border: none;
+    padding: 0;
+}
+
+.dot.active {
+    background-color: #5f6368; /* Color de punto activo (gris oscuro de tu paleta) */
+    width: 30px; /* Ancho para el efecto de rectángulo */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
 
 .carousel-button {
     position: absolute;
-    top: 50%;
+    /* Ajustamos el 'top' para que no se superponga con la descripción o los puntos */
+    top: 45%; 
     transform: translateY(-50%);
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
@@ -275,6 +334,12 @@ a:hover {
     h1 {
         font-size: 3.5em;
     }
+    #hero h1 {
+        font-size: 3.2rem; /* Ajuste responsive para el hero */
+    }
+    #hero h2 {
+        font-size: 1.6rem; /* Ajuste responsive para el hero */
+    }
     h2 {
         font-size: 2.5em;
     }
@@ -314,6 +379,7 @@ a:hover {
         font-size: 16px;
         width: 35px;
         height: 35px;
+        top: 40%; /* Ajuste para móviles */
     }
     .carousel-button.prev { left: 10px; }
     .carousel-button.next { right: 10px; }
