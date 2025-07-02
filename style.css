@@ -18,12 +18,14 @@ body {
 h1, h2, h3 {
     color: #202124; /* Dark grey for headings */
     margin-bottom: 0.5em;
+  
 }
 
 h1 {
     font-size: 2.8em;
     font-weight: 700;
     margin-bottom: 0.2em;
+    color: white;
 }
 
 h2 {
@@ -34,6 +36,7 @@ h2 {
     padding-bottom: 10px;
     border-bottom: 2px solid #e0e0e0; /* Subtle separator */
     display: inline-block; /* To make border only as wide as text */
+     
 }
 /* Center align h2 properly */
 section h2, footer h2 {
@@ -61,10 +64,10 @@ a:hover {
     text-decoration: underline;
 }
 
-/* --- MODIFICADO: Estilos del Header (Hero) --- */
+/* --- Estilos del Header (Hero) --- */
 #hero {
     position: relative; /* Necesario para el overlay */
-    background-image: url('https://images.unsplash.com/photo-1556742111-a301076d9d18?q=80&w=2070&auto=format&fit=crop'); /* URL de tu imagen de fondo */
+    background-image: url('../images/Retail.jpeg'); /* URL de tu imagen de fondo */
     background-size: cover;
     background-position: center;
     color: #fff; /* Texto blanco para que contraste con el fondo */
@@ -125,7 +128,7 @@ a:hover {
     text-decoration: none;
 }
 
-/* Portfolio Section - Carousels */
+/* Portfolio Section & others */
 .portfolio-section, .skills-section, .experience-section {
     padding: 60px 0;
     background-color: #fff;
@@ -139,10 +142,10 @@ a:hover {
     border-bottom: none;
 }
 
+/* ===== INICIO CAMBIOS EN CARRUSEL (para efecto FADE) ===== */
 
 .carousel-container {
     position: relative;
-    overflow: hidden;
     width: 100%;
     max-width: 900px; /* Max width for carousel */
     margin: 0 auto 50px auto; /* Centered with bottom margin */
@@ -152,28 +155,43 @@ a:hover {
 }
 
 .carousel-slides {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
+    position: relative; /* Contenedor para slides posicionadas absolutamente */
+    overflow: hidden;
+    width: 100%;
+    /* La altura se ajustará por la imagen activa, pero podemos poner un aspect-ratio para evitar saltos */
+    aspect-ratio: 16 / 9; /* Ajusta según el formato de tus imágenes */
 }
 
 .carousel-slide {
-    min-width: 100%;
+    position: absolute; /* Todas las slides se apilan en el mismo lugar */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Por defecto, todas son invisibles */
+    transition: opacity 0.7s ease-in-out; /* Transición suave de opacidad */
     box-sizing: border-box;
 }
 
-.carousel-slide img {
-    width: 100%;
-    height: auto; /* Maintain aspect ratio */
-    max-height: 500px; /* Max height for images */
-    object-fit: contain; /* Show full image, letterbox if needed */
-    display: block;
-    /* Quitamos el border-radius de aquí para que no interfiera si los puntos van debajo */
+.carousel-slide.active {
+    opacity: 1; /* La slide activa se hace visible */
+    z-index: 2; /* Se asegura de que esté por encima de las otras */
 }
 
-/* --- NUEVO: Estilos para los Puntos del Carrusel --- */
+.carousel-slide a, .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain; /* Muestra la imagen completa, con bandas si es necesario */
+}
+
+/* ===== FIN CAMBIOS EN CARRUSEL ===== */
+
 .carousel-dots {
     text-align: center;
-    padding: 15px 0 10px; /* Espacio para los puntos */
+    padding: 15px 0 10px;
+    position: relative;
+    z-index: 3; /* Para que los puntos estén por encima de las slides */
 }
 
 .dot {
@@ -181,32 +199,31 @@ a:hover {
     height: 12px;
     width: 12px;
     margin: 0 5px;
-    background-color: #dadce0; /* Color de punto inactivo */
-    border-radius: 50%; /* Círculo por defecto */
+    background-color: #dadce0;
+    border-radius: 50%;
     display: inline-block;
-    transition: background-color 0.6s ease, width 0.4s ease; /* Animación suave */
+    transition: background-color 0.6s ease, width 0.4s ease;
     border: none;
     padding: 0;
 }
 
 .dot.active {
-    background-color: #5f6368; /* Color de punto activo (gris oscuro de tu paleta) */
-    width: 30px; /* Ancho para el efecto de rectángulo */
-    border-radius: 10px; /* Bordes redondeados */
+    background-color: #5f6368;
+    width: 30px;
+    border-radius: 10px;
 }
-
 
 .carousel-button {
     position: absolute;
-    /* Ajustamos el 'top' para que no se superponga con la descripción o los puntos */
-    top: 45%; 
-    transform: translateY(-50%);
+    top: 50%;
+    /* Ajustamos el 'transform' para centrarlo respecto a la altura total del contenedor de slides */
+    transform: translateY(-50%); 
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
     padding: 10px 15px;
     cursor: pointer;
-    z-index: 10;
+    z-index: 10; /* Por encima de todo */
     border-radius: 50%;
     font-size: 20px;
     line-height: 1;
@@ -217,28 +234,20 @@ a:hover {
     justify-content: center;
 }
 
-.carousel-button.prev {
-    left: 15px;
-}
+.carousel-button.prev { left: 15px; }
+.carousel-button.next { right: 15px; }
+.carousel-button:hover { background-color: rgba(0, 0, 0, 0.8); }
 
-.carousel-button.next {
-    right: 15px;
-}
-
-.carousel-button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-}
 .carousel-description {
     padding: 15px 20px;
     text-align: center;
     font-size: 0.95em;
     color: #5f6368;
-    background-color: #f8f9fa; /* Slight contrast for description */
+    background-color: #f8f9fa;
     border-top: 1px solid #e0e0e0;
-    margin-bottom: 0; /* Remove default p margin */
+    margin-bottom: 0;
     border-radius: 0 0 8px 8px;
 }
-
 
 /* Skills Section */
 .skills-grid {
@@ -247,7 +256,6 @@ a:hover {
     gap: 30px;
     text-align: center;
 }
-
 .skill-item {
     background-color: #f8f9fa;
     padding: 20px;
@@ -258,14 +266,12 @@ a:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
-
 .skill-item img {
-    width: 60px; /* Adjust as needed */
+    width: 60px;
     height: 60px;
     margin-bottom: 10px;
     object-fit: contain;
 }
-
 .skill-item p {
     margin-bottom: 0;
     font-weight: 500;
@@ -275,54 +281,43 @@ a:hover {
 /* Experience Section */
 .experience-grid {
     display: grid;
-    grid-template-columns: 1fr; /* Single column by default */
+    grid-template-columns: 1fr;
     gap: 30px;
 }
-
 .experience-item {
     background-color: #f8f9fa;
     padding: 25px;
     border-radius: 8px;
 }
-
 .experience-item h3 {
     font-size: 1.4em;
     margin-bottom: 5px;
 }
-
 .experience-item .company-date {
     font-size: 0.9em;
-    color: #1a73e8; /* Blue for company/date */
+    color: #1a73e8;
     font-weight: 500;
     margin-bottom: 10px;
 }
 
 /* Footer / Contact Section */
 #contact {
-    background-color: #f1f3f4; /* Slightly different grey for footer */
+    background-color: #f1f3f4;
     color: #3c4043;
     padding: 50px 0;
     text-align: center;
     border-top: 1px solid #dadce0;
 }
-
 #contact h2 {
     margin-bottom: 20px;
-    border-bottom: none; /* No border for footer h2 */
+    border-bottom: none;
 }
-
 .contact-info p {
     margin-bottom: 8px;
     font-size: 1.1em;
 }
-
-.contact-info a {
-    color: #1a73e8;
-}
-.contact-info a:hover {
-    color: #1765cc;
-}
-
+.contact-info a { color: #1a73e8; }
+.contact-info a:hover { color: #1765cc; }
 .copyright {
     margin-top: 30px;
     font-size: 0.9em;
@@ -331,56 +326,25 @@ a:hover {
 
 /* Responsive Adjustments */
 @media (min-width: 768px) {
-    h1 {
-        font-size: 3.5em;
-    }
-    #hero h1 {
-        font-size: 3.2rem; /* Ajuste responsive para el hero */
-    }
-    #hero h2 {
-        font-size: 1.6rem; /* Ajuste responsive para el hero */
-    }
-    h2 {
-        font-size: 2.5em;
-    }
-    .experience-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Multi-column for larger screens */
-    }
+    h1 { font-size: 3.5em; }
+    #hero h1 { font-size: 3.2rem; }
+    #hero h2 { font-size: 1.6rem; }
+    h2 { font-size: 2.5em; }
+    .experience-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 }
 
 @media (max-width: 767px) {
-    h1 {
-        font-size: 2.2em;
-    }
-    h2 {
-        font-size: 1.8em;
-        margin-bottom: 30px;
-    }
-    h3 {
-        font-size: 1.4em;
-    }
-    #hero {
-        padding: 50px 0;
-    }
-    .cta-button {
-        padding: 10px 20px;
-        font-size: 0.9em;
-    }
-    .skills-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 20px;
-    }
-    .skill-item img {
-        width: 50px;
-        height: 50px;
-    }
-     .carousel-button {
-        padding: 8px 12px;
-        font-size: 16px;
-        width: 35px;
-        height: 35px;
-        top: 40%; /* Ajuste para móviles */
-    }
+    h1 { font-size: 2.2em; }
+    h2 { font-size: 1.8em; margin-bottom: 30px; }
+    h3 { font-size: 1.4em; }
+    #hero { padding: 50px 0; }
+    .cta-button { padding: 10px 20px; font-size: 0.9em; }
+    .skills-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 20px; }
+    .skill-item img { width: 50px; height: 50px; }
+    /* Ajustamos la posición de los botones en móviles para que no se superpongan con la descripción */
+    .carousel-button { top: calc(50% - 20px); /* Sube un poco los botones */ }
     .carousel-button.prev { left: 10px; }
     .carousel-button.next { right: 10px; }
+    /* Ajustamos altura en móvil */
+    .carousel-slides { aspect-ratio: 4 / 3; }
 }
