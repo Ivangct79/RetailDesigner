@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Lógica del Carrusel con FADE y AUTOPLAY ---
     const carousels = document.querySelectorAll('.carousel-container');
-    const autoPlayDelay = 5000; // 5000ms = 2 segundos
+    const autoPlayDelay = 5000; // 5 segundos
 
     carousels.forEach(carousel => {
         const slides = carousel.querySelectorAll('.carousel-slide');
@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const nextButton = carousel.querySelector('.carousel-button.next');
         const dotsContainer = carousel.querySelector('.carousel-dots');
         
+        // CAMBIO CLAVE: Comprobamos si este carrusel debe tener autoplay
+        const shouldAutoplay = !carousel.classList.contains('no-autoplay');
+
         let currentIndex = 0;
         let autoPlayInterval = null; // Variable para almacenar el intervalo del autoplay
         const totalSlides = slides.length;
@@ -23,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
             dot.setAttribute('aria-label', `Ir a la diapositiva ${i + 1}`);
             dot.addEventListener('click', () => {
                 goToSlide(i);
-                // Reseteamos el autoplay al hacer clic en un punto
+                // Reseteamos el autoplay al hacer clic en un punto (si está activado)
                 resetAutoPlay(); 
             });
             dotsContainer.appendChild(dot);
@@ -33,12 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 2. Función para actualizar la vista del carrusel (ahora con FADE)
         function updateCarousel() {
-            // Quita la clase 'active' de todas las slides
             slides.forEach(slide => slide.classList.remove('active'));
-            // Quita la clase 'active' de todos los puntos
             dots.forEach(dot => dot.classList.remove('active'));
-
-            // Añade la clase 'active' a la slide y punto actuales
             if (slides[currentIndex]) {
                 slides[currentIndex].classList.add('active');
             }
@@ -55,7 +54,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 4. Funciones para controlar el Autoplay
         function startAutoPlay() {
-            // Limpiamos cualquier intervalo anterior para evitar duplicados
+            // CAMBIO CLAVE: Solo iniciamos el intervalo si shouldAutoplay es true
+            if (!shouldAutoplay) return;
+
             clearInterval(autoPlayInterval);
             autoPlayInterval = setInterval(() => {
                 currentIndex = (currentIndex + 1) % totalSlides;
@@ -69,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function resetAutoPlay() {
             stopAutoPlay();
-            startAutoPlay();
+            startAutoPlay(); // La lógica interna de startAutoPlay ya comprueba si debe iniciarse
         }
 
         // 5. Event Listeners para los botones y hover
@@ -85,13 +86,15 @@ document.addEventListener('DOMContentLoaded', function() {
             resetAutoPlay();
         });
         
-        // Detener autoplay al pasar el ratón por encima, reanudar al salir
-        carousel.addEventListener('mouseenter', stopAutoPlay);
-        carousel.addEventListener('mouseleave', startAutoPlay);
+        // CAMBIO CLAVE: Solo añadimos los listeners de hover si el autoplay está activado
+        if (shouldAutoplay) {
+            carousel.addEventListener('mouseenter', stopAutoPlay);
+            carousel.addEventListener('mouseleave', startAutoPlay);
+        }
 
         // 6. Iniciar el carrusel
-        updateCarousel(); // Muestra la primera slide
-        startAutoPlay();  // Inicia el autoplay
+        updateCarousel(); // Muestra la primera slide siempre
+        startAutoPlay();  // Inicia el autoplay solo si corresponde
     });
 
     // --- Actualizar año del copyright ---
